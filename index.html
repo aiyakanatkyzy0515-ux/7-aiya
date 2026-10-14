@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Виртуалды зертхана: Этерификация реакциялары</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9eeed;--panel:#fbfcfb;--ink:#17282c;--mute:#5d7075;--line:#c9d4d3;--teal:#0f6b78;--flame:#e8a317;--red:#c23b2e;--ok:#2a8a4f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "IBM Plex Sans",system-ui,sans-serif;padding:16px}
+h1{font-size:1.5rem;margin:0 0 4px}h2{font-size:1.05rem;margin:0 0 8px}
+.sub{color:var(--mute);margin:0 0 12px;max-width:75ch}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{background:#fff;color:var(--teal)}
+.tabs button.on{background:var(--teal);color:#fff}
+.grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+svg{width:100%;height:auto;display:block}
+button{font:inherit;border:1px solid var(--teal);background:var(--teal);color:#fff;border-radius:7px;padding:8px 12px;cursor:pointer;margin:3px 0;text-align:left}
+button.opt{display:block;width:100%;background:#fff;color:var(--ink);border-color:var(--line)}
+button.opt:hover{border-color:var(--teal)}
+button:focus-visible{outline:3px solid var(--flame);outline-offset:2px}
+.msg{padding:8px 10px;border-left:4px solid var(--teal);background:#e7f1f1;border-radius:4px;margin-top:8px;min-height:2.6em}
+.msg.warn{border-color:var(--red);background:#f9e6e3}.msg.good{border-color:var(--ok);background:#e3f3e9}
+.eq{font-weight:500;background:#e1ebea;border-radius:6px;padding:6px 10px;display:inline-block}
+ul{margin:4px 0;padding-left:20px}
+details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer;font-weight:500}
+.bb{animation:rise 1.4s linear infinite}.fm{animation:rise2 2.4s linear infinite}
+@keyframes rise{from{transform:translateY(0);opacity:.9}to{transform:translateY(-70px);opacity:0}}
+@keyframes rise2{from{transform:translateY(0) scale(1);opacity:.7}to{transform:translateY(-45px) scale(2);opacity:0}}
+@media(prefers-reduced-motion:reduce){.bb,.fm{animation:none}}
+.dp{animation:fall .8s linear infinite}@keyframes fall{from{transform:translateY(0);opacity:1}to{transform:translateY(16px);opacity:.2}}@media(prefers-reduced-motion:reduce){.dp{animation:none}}
+table{border-collapse:collapse;width:100%;font-size:.9rem}td,th{border:1px solid var(--line);padding:5px 8px;text-align:left}th{background:#e1ebea}
+</style>
+</head>
+<body>
+<h1>Этерификация реакциялары</h1>
+<p class="sub">Виртуалды зертханалық жұмыс № 8. Этилацетат пен сірке қышқылының изоамил эфирін синтездеңіз: әр қадамда дұрыс әрекетті таңдаңыз.</p>
+<div class="tabs" id="tabs"></div>
+<div class="grid">
+  <div class="panel"><h2 id="et"></h2><p class="sub" id="aim"></p>
+    <svg id="sc" viewBox="0 0 520 300" role="img" aria-label="Синтез қондырғысы"></svg></div>
+  <div>
+    <div class="panel" id="step"></div>
+    <div class="panel"><h2>Бақылау нәтижелері</h2><div id="obs"></div></div>
+  </div>
+</div>
+<div class="panel"><h2>Лабораториялық журнал</h2><div id="jr">Тәжірибелерді аяқтаған соң жазбалар осында жиналады.</div></div>
+<div class="panel"><h2>Заттардың қасиеттері</h2><div style="overflow-x:auto"><table>
+<tr><th>Заттың аты</th><th>Формула</th><th>Молекулалық масса</th><th>Қайнау температурасы, °C</th><th>Тығыздығы, г/см³</th></tr>
+<tr><td>Сірке қышқылы</td><td>CH₃COOH</td><td>60,05</td><td>118</td><td>1,05</td></tr>
+<tr><td>Этанол</td><td>C₂H₅OH</td><td>46,07</td><td>78,4</td><td>0,79</td></tr>
+<tr><td>Этилацетат</td><td>CH₃COOC₂H₅</td><td>88,11</td><td>77,2</td><td>0,90</td></tr>
+<tr><td>Изоамил спирті</td><td>C₅H₁₁OH</td><td>88,15</td><td>131</td><td>0,81</td></tr>
+<tr><td>Изоамилацетат</td><td>CH₃COOC₅H₁₁</td><td>130,18</td><td>142</td><td>0,87</td></tr>
+</table></div></div>
+<div class="panel"><h2>Қауіпсіздік техникасы мен сұрақтар</h2>
+<details><summary>Қауіпсіздік техникасы</summary><ul><li>Эфирлермен абайлап жұмыс істеңіз: олар жеңіл жанады (сіркеизоамил эфирінің тұтану температурасы шамамен 36 °C).</li><li>Эфир буы көзді, мұрынды және тыныс жолдарын тітіркендіреді: тартпа шкафта жұмыс істеңіз.</li><li>Қондырғы герметикалық болуы тиіс, ал бөлгіш воронканың шлифі құрғақ болуы керек.</li></ul></details>
+<details><summary>Май қышқылына изомер болатын күрделі эфирлер</summary><p>Май қышқылының (C₃H₇COOH) изомері — этилацетат (CH₃COOC₂H₅), метилпропионат (C₂H₅COOCH₃) және пропилформиат (HCOOC₃H₇).</p></details>
+<details><summary>Күрделі эфирлердің гидролизі</summary><p>CH₃COOC₂H₅ + H₂O ⇌ CH₃COOH + C₂H₅OH (қышқыл ортада); сілтілік гидролиз қайтымсыз: CH₃COOC₂H₅ + NaOH → CH₃COONa + C₂H₅OH.</p></details>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const WATER="#bcdcea",AC="#e8e0b0",ES="#f1ecc8",CL="#f1f1ea";
+const mk=()=>({L:null,fun:null,mode:"",bath:0,heat:0,temp:0,fb:0,cond:0,rc:0,sep:null,sb:0,drop:0,tr:0});
+const yl=(m,t)=>p=>{const y=Math.max(.25,.8-.04*p.w);return `Алынған эфир: ${(t*y).toFixed(1)} г; теориялық шығым ${t.toFixed(2).replace(".",",")} г; практикалық шығым ${(y*100).toFixed(0)} %.`};
+const EX=[
+{n:"№1 Этилацетат синтезі",aim:"Сірке қышқылы мен этанолдан этилацетат алу (H₂SO₄ қатысында, 140 °C).",
+ eq:"CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O (H₂SO₄). Қосымша: 2C₂H₅OH → C₂H₅OC₂H₅ + H₂O (t<140 °C)",
+ steps:[
+ {q:"Вюрц колбасына алдымен не саламыз?",o:[["2,5 мл этанол + 2,5 мл конц. H₂SO₄",1],["Барлық спирт пен қышқылды бірден",0,"Алдымен аз мөлшер салынады, қалғаны тамшуырдан тамшылатылады."]],f:s=>{s.L=[[5,AC]]},ob:"Колбада 2,5 мл этанол мен 2,5 мл H₂SO₄."},
+ {q:"Қондырғыны қалай жинаймыз?",o:[["Вюрц колбасы + тамшуыр + термометр + Либих тоңазытқышы + аллонж",1],["Кері тоңазытқышпен",0,"Эфирді айдап алу керек, сондықтан тура (Либих) тоңазытқыш қажет."]],f:s=>{s.mode="dist";s.cond=1;s.fun=0}},
+ {q:"Колбаны қалай қыздырамыз?",o:[["Глицерин моншасында 140 °C-қа дейін",1],["Су моншасында",0,"Су моншасы 100 °C-тан жоғары қыздырмайды; глицерин моншасы керек."]],f:s=>{s.bath=1;s.heat=1;s.temp=140},ob:"Глицерин моншасы 140 °C-қа жетті."},
+ {q:"Тамшуырдан қоспаны қалай қосамыз?",o:[["20 мл этанол + 20 мл сірке қышқылы, айдау жылдамдығына тең жылдамдықпен",1],["Барлығын бірден құямыз",0,"Бірден құйсаңыз, температура төмендеп, реакция бұзылады."]],f:s=>{s.fun=1;s.drop=1;s.rc=.4;s.fb=1;s.L=[[9,AC]]},ob:"Қоспа тамшылап қосылады, эфир үздіксіз айдалады."},
+ {q:"Температураны қалай ұстаймыз?",o:[["140 °C-та, одан асырмаймыз",1],["Тезірек болу үшін 160 °C-қа дейін",0,"Жоғары температурада H₂SO₄ спиртті тотықтырады (CO₂, SO₂ бөлінеді)."]],f:s=>{s.fun=0;s.rc=1;s.drop=0;s.fb=0;s.heat=0;s.bath=0;s.temp=0},ob:"Дистиллят жиналды: эфир, сірке қышқылы, спирт және су қоспасы."},
+ {q:"Дистиллятты қалай бейтараптаймыз?",o:[["Бөлгіш воронкада Na₂CO₃ ерітіндісін абайлап қосамыз",1],["Сода ерітіндісін бірден көп құямыз",0,"CO₂ қарқынды бөлінеді, сұйық шашырауы мүмкін."]],f:s=>{s.L=null;s.mode="";s.cond=0;s.rc=0;s.fun=null;s.sep=[[12,WATER],[28,ES]];s.sb=1},ob:"CO₂ бөлінді; көк лакмус қызармайды."},
+ {q:"Қай қабатты бөліп аламыз?",o:[["Жоғарғы қабатты (этилацетат, ρ = 0,9 г/см³)",1],["Төменгі қабатты",0,"Этилацетат судан жеңіл, сондықтан үстінде болады."]],f:s=>{s.sb=0;s.sep=[[28,ES]]}},
+ {q:"Спиртті қалай кетіреміз?",o:[["Қаныққан CaCl₂ ерітіндісімен жуамыз",1],["Таза сумен жуамыз",0,"CaCl₂ спиртті CaCl₂·2C₂H₅OH түрінде байланыстырады, эфир ерімейді."]],f:s=>{s.sep=[[8,"#dfe4ea"],[26,ES]]},ob:"Спирт сулы қабатқа өтті."},
+ {q:"Эфирді қалай құрғатамыз?",o:[["Бөліп алып, сусыз Na₂SO₄-пен",1],["Конц. H₂SO₄-пен",0,"Қышқыл реакцияны қайта қоздырады; құрғатқыш ретінде сусыз тұз алынады."]],f:s=>{s.sep=null;s.L=[[14,ES]];s.mode="dist";s.cond=1;s.rc=0}},
+ {q:"Соңғы айдауда қай фракцияны жинаймыз?",o:[["75–78 °C фракциясын",1],["100 °C-қа дейінгі барлығын",0,"Таза этилацетат 77,2 °C-та қайнайды; қалғаны қоспа болады."]],f:s=>{s.bath=1;s.heat=1;s.temp=77;s.drop=1;s.rc=.7;s.fb=1},ob:yl(0,30.84)}],
+ quiz:{q:"Ле-Шателье принципі бойынша эфир шығымын қалай арттырамыз?",o:["Бір реагентті артық алып, өнімді реакциядан шығарамыз","Қысымды төмендетеміз","Катализаторды аламыз"],a:0,e:"Тепе-теңдік өнім жағына ығысады."}},
+
+{n:"№2 Изоамилацетат синтезі",aim:"Түзілген суды су бөлгіш қақпанмен азеотроп ретінде алып тастау.",
+ eq:"CH₃COOH + (CH₃)₂CHCH₂CH₂OH ⇌ CH₃COOCH₂CH₂CH(CH₃)₂ + H₂O (H₂SO₄)",
+ steps:[
+ {q:"Колбаға не саламыз?",o:[["26 мл изоамил спирті + 17 мл мұзды сірке қышқылы + 0,5 мл конц. H₂SO₄ + қайнағыш",1],["Катализаторсыз спирт пен қышқыл",0,"Катализатор (H₂SO₄) болмаса реакция өте баяу жүреді."]],f:s=>{s.L=[[43,CL]]},ob:"Колбада 26 мл изоамил спирті, 17 мл сірке қышқылы және 0,5 мл H₂SO₄."},
+ {q:"Қондырғыны қалай жинаймыз?",o:[["Су бөлгіш қақпан + кері тоңазытқыш",1],["Тура тоңазытқыш",0,"Су қақпанда жиналып, эфир колбаға қайтуы үшін кері тоңазытқыш керек."]],f:s=>{s.mode="reflux";s.cond=1}},
+ {q:"Қыздыру?",o:[["Глицерин моншасымен қайнағанша",1],["Ашық жалынмен қатты қыздырамыз",0,"Бу жеңіл тұтанады; монша немесе электроплитка қолданылады."]],f:s=>{s.bath=1;s.heat=1;s.temp=140;s.fb=1;s.tr=.4;s.L[0][1]=ES},ob:"Қақпанда екі қабат: төменгі — су, жоғарғы — эфир қоспасы (колбаға қайта ағады)."},
+ {q:"Реакцияның аяқталғанын қалай білеміз?",o:[["Қақпандағы су қабаты көбеймей қалғанда",1],["Қайнағаннан 5 минут өткенде",0,"Уақыт емес, бөлінген су көлемі өлшем болады."]],f:s=>{s.tr=1},ob:"Су қабаты өспей қалды: реакция аяқталды."},
+ {q:"Өнімді қалай өңдейміз?",o:[["Салқындатып, бөлгіш воронкада сумен жуамыз",1],["Ыстық күйінде воронкаға құямыз",0,"Алдымен салқындату керек: ыстық бу қысым мен қауіп туғызады."]],f:s=>{s.L=null;s.mode="";s.cond=0;s.heat=0;s.bath=0;s.temp=0;s.fb=0;s.sep=[[10,WATER],[35,ES]]}},
+ {q:"Қышқыл қалдығын қалай кетіреміз?",o:[["5 % Na₂CO₃ ерітіндісімен жуамыз",1],["Концентрлі NaOH-пен",0,"Күшті сілті эфирді гидролиздейді; 5 % сода қолданылады."]],f:s=>{s.sep=[[8,WATER],[8,"#dcd8c8"],[32,ES]];s.sb=1},ob:"CO₂ бөлінді; қабаттар толық бөлінбеді (эмульсия)."},
+ {q:"Қабаттар жақсы бөлінбесе не істейміз?",o:[["5 г ас тұзын қосып, шайқаймыз",1],["Ұзақ қыздырамыз",0,"Тұз сулы қабаттың тығыздығын арттырып, эфирді шығарады."]],f:s=>{s.sep=[[14,WATER],[34,ES]];s.sb=0},ob:"Тұз қосқан соң қабаттар айқын бөлінді."},
+ {q:"Эфирді қалай құрғатамыз?",o:[["Бөліп алып, сусыз Na₂SO₄ немесе MgSO₄-пен",1],["Конц. H₂SO₄-пен",0,"Қышқыл эфирді гидролиздеп, қайта реакцияны қоздырады."]],f:s=>{s.sep=null;s.L=[[16,ES]];s.mode="dist";s.cond=1;s.rc=0}},
+ {q:"Қай фракцияны жинаймыз?",o:[["138–140 °C фракциясын",1],["75–78 °C фракциясын",0,"Бұл этилацетат; изоамилацетат 142 °C-та қайнайды."]],f:s=>{s.bath=1;s.heat=1;s.temp=140;s.drop=1;s.rc=.7;s.fb=1},ob:yl(0,31.24)}],
+ quiz:{q:"Су бөлгіш қақпан не үшін керек?",o:["Суды бөліп, тепе-теңдікті эфирге қарай ығыстырады","Эфирді салқындатады","Қышқылды бейтараптайды"],a:0,e:"Су алынған сайын тепе-теңдік өнім жағына ығысады."}}
+];
+const P=EX.map(()=>({s:mk(),i:0,obs:[],w:0,qd:0}));let e=0;
+
+function draw(s){
+ const SX=260;let h=`<defs><clipPath id="cf"><circle cx="110" cy="215" r="50"/></clipPath><clipPath id="cr"><circle cx="430" cy="235" r="38"/></clipPath><clipPath id="cn"><polygon points="56,20 116,20 98,66 86,66"/></clipPath><clipPath id="cs"><path d="M${SX-20} 40h40c25 30 30 70 8 110l-14 40h-28l-14-40c-22-40-17-80 8-110z"/></clipPath></defs>`;
+ if(s.L){
+  if(s.bath)h+=`<rect x="45" y="190" width="130" height="80" rx="8" fill="#d9b46a" opacity=".6" stroke="#a9894a"/><text x="52" y="264" font-size="10" fill="#6b5320">глицерин моншасы</text>`;
+  const tot=s.L.reduce((a,l)=>a+l[0],0),lh=Math.min(75,tot*2);let c=0;
+  s.L.forEach(([v,col])=>{const hh=v/tot*lh;c+=hh;h+=`<rect x="60" y="${265-c}" width="100" height="${hh}" fill="${col}" clip-path="url(#cf)"/>`});
+  if(s.fb)for(let k=0;k<4;k++)h+=`<circle class="bb" cx="${95+k*10}" cy="255" r="2.5" fill="#fff" style="animation-delay:${k*.35}s"/>`;
+  h+=`<circle cx="110" cy="215" r="50" fill="none" stroke="#6a8486" stroke-width="2.5"/><path d="M92 80V168M128 80V168" stroke="#6a8486" stroke-width="2.5" fill="none"/>`;
+  if(s.temp){const mh=10+s.temp/150*70;h+=`<rect x="113" y="45" width="5" height="95" fill="#fff" stroke="#6a8486"/><rect x="114.5" y="${140-mh}" width="2" height="${mh}" fill="#c23b2e"/><text x="132" y="66" font-size="13" font-weight="600">${s.temp} °C</text>`}
+  if(s.heat)h+=`<rect x="60" y="272" width="100" height="8" fill="#5a6b6e"/><path d="M110 272q-14 -20 0 -34q14 14 0 34z" fill="#e8a317"/>`;
+  if(s.fun!==null){h+=`<polygon points="56,20 116,20 98,66 86,66" fill="none" stroke="#6a8486" stroke-width="2"/><rect x="56" y="${66-46*s.fun}" width="60" height="${46*s.fun}" fill="#e9e7d6" clip-path="url(#cn)"/><rect x="90" y="66" width="4" height="34" fill="#6a8486"/><text x="14" y="36" font-size="10" fill="#5d7075">тамшуыр</text>`}
+  if(s.mode=="dist"){
+   h+=`<path d="M128 100L205 120" stroke="#6a8486" stroke-width="5" fill="none"/><g transform="rotate(8 205 127)"><rect x="205" y="112" width="170" height="30" fill="#f4fafa" stroke="#6a8486" stroke-width="2"/>${s.cond?`<rect x="209" y="116" width="162" height="22" fill="#9ccfe2" opacity=".8"/>`:""}<line x1="205" y1="127" x2="375" y2="127" stroke="#6a8486" stroke-width="3"/></g><text x="215" y="100" font-size="10" fill="#5d7075">Либих тоңазытқышы</text>`;
+   h+=`<path d="M373 151L430 175V198" stroke="#6a8486" stroke-width="5" fill="none"/>`;
+   if(s.drop)h+=`<circle class="dp" cx="430" cy="196" r="3.5" fill="#c9b96a"/>`;
+   h+=`<rect x="392" y="${273-s.rc*55}" width="76" height="${s.rc*55}" fill="${ES}" clip-path="url(#cr)"/><circle cx="430" cy="235" r="38" fill="none" stroke="#6a8486" stroke-width="2.5"/><path d="M418 200V200M418 198V200" stroke="#6a8486"/><text x="396" y="292" font-size="10" fill="#5d7075">қабылдағыш</text>`;
+  }
+  if(s.mode=="reflux"){
+   h+=`<rect x="92" y="4" width="36" height="70" fill="#f4fafa" stroke="#6a8486" stroke-width="2"/>${s.cond?`<rect x="96" y="8" width="28" height="62" fill="#9ccfe2" opacity=".8"/>`:""}<text x="134" y="30" font-size="10" fill="#5d7075">кері тоңазытқыш</text>`;
+   const wh=s.tr*50;h+=`<path d="M128 92H154V100M154 166V174H128" fill="none" stroke="#6a8486" stroke-width="3"/><rect x="140" y="${166-wh-16}" width="28" height="16" fill="${ES}"/><rect x="140" y="${166-wh}" width="28" height="${wh}" fill="${WATER}"/><rect x="140" y="98" width="28" height="68" fill="none" stroke="#6a8486" stroke-width="2"/><text x="174" y="130" font-size="10" fill="#5d7075">қақпан</text>`;
+  }
+ }
+ if(s.sep){
+  let c=0;h+=`<g>`;s.sep.forEach(([v,col])=>{const hh=v*3;c+=hh;h+=`<rect x="${SX-50}" y="${190-c}" width="100" height="${hh}" fill="${col}" clip-path="url(#cs)"/>`});
+  if(s.sb)for(let k=0;k<5;k++)h+=`<circle class="bb" cx="${SX-20+k*10}" cy="180" r="2.5" fill="#fff" style="animation-delay:${k*.3}s"/>`;
+  h+=`<path d="M${SX-20} 40h40c25 30 30 70 8 110l-14 40h-28l-14-40c-22-40-17-80 8-110z" fill="none" stroke="#6a8486" stroke-width="2.5"/><rect x="${SX-3}" y="190" width="6" height="22" fill="#6a8486"/><rect x="${SX-14}" y="26" width="28" height="14" fill="#a0522d"/><text x="${SX-40}" y="240" font-size="12" fill="#17282c">бөлгіш воронка</text></g>`;
+ }
+ return h;
+}
+function pick(k){
+ const p=P[e],st=EX[e].steps[p.i],o=st.o[k];
+ if(o[1]){st.f(p.s);if(st.ob)p.obs.push(typeof st.ob=="function"?st.ob(p):st.ob);p.i++;ui("Дұрыс. Келесі қадамға көшіңіз.","good")}
+ else{p.w++;ui(o[2]||"Қате таңдау.","warn")}
+}
+function ans(k){
+ const p=P[e],q=EX[e].quiz;
+ if(k===q.a){p.qd=1;ui("Дұрыс. "+q.e,"good");jr()}else{p.w++;ui("Қате. Қайта ойланыңыз.","warn")}
+}
+function ui(m,c){
+ const p=P[e],x=EX[e];
+ $("tabs").innerHTML=EX.map((t,i)=>`<button class="${i===e?"on":""}" onclick="e=${i};ui()">${P[i].qd?"✓ ":""}${t.n}</button>`).join("");
+ $("et").textContent=x.n;$("aim").textContent="Мақсаты: "+x.aim;
+ $("sc").innerHTML=draw(p.s);
+ let h="";
+ if(p.i<x.steps.length){const st=x.steps[p.i];h=`<h2>Қадам ${p.i+1} / ${x.steps.length}</h2><p>${st.q}</p>`+st.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${o[0]}</button>`).join("")}
+ else if(!p.qd){h=`<h2>Тексеру сұрағы</h2><p>${x.quiz.q}</p>`+x.quiz.o.map((o,k)=>`<button class="opt" onclick="ans(${k})">${o}</button>`).join("")}
+ else h=`<h2>Тәжірибе аяқталды</h2><p>Реакция теңдеуі:</p><p class="eq">${x.eq}</p>`;
+ h+=`<div class="msg ${c||""}" role="status" aria-live="polite">${m||"Дұрыс әрекетті таңдаңыз."}</div><p style="margin:6px 0 0;font-size:.85rem;color:var(--mute)">Қателер: ${p.w}</p><button onclick="rs()" style="background:#fff;color:var(--teal)">Тәжірибені қайта бастау</button>`;
+ $("step").innerHTML=h;
+ $("obs").innerHTML=p.obs.length?"<ul>"+p.obs.map(o=>`<li>${o}</li>`).join("")+"</ul>":"Әзірге жазба жоқ.";
+}
+function rs(){P[e]={s:mk(),i:0,obs:[],w:0,qd:0};ui();jr()}
+function jr(){
+ const d=P.map((p,i)=>p.qd?`<h3 style="margin:10px 0 2px;font-size:1rem">${EX[i].n}</h3><p class="eq">${EX[i].eq}</p><ul>${p.obs.map(o=>`<li>${o}</li>`).join("")}</ul>`:"").join("");
+ const w=P.reduce((a,p)=>a+p.w,0);
+ $("jr").innerHTML=d?d+`<p>Аяқталған тәжірибелер: ${P.filter(p=>p.qd).length}/2. Қателер саны: ${w}.</p>`:"Тәжірибелерді аяқтаған соң жазбалар осында жиналады.";
+}
+ui();
+</script>
+</body>
+</html>
